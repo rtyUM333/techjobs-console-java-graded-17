@@ -95,7 +95,43 @@ public class JobData {
         loadData();
 
         // TODO - implement this method
-        return null;
+
+        ArrayList<HashMap<String, String>> matchingJobs = new ArrayList<>();
+
+        for (HashMap<String, String> row : allJobs) {
+            boolean foundMatch = false;
+
+            for (String key : row.keySet()) {
+                String aValue = row.get(key).toLowerCase();
+                if (aValue.contains(value.toLowerCase())) {
+                    foundMatch = true;
+                    break;
+                }
+            }
+            if (foundMatch) {
+                matchingJobs.add(row);
+            }
+        }
+        return matchingJobs;
+    }
+
+
+    private static boolean containsSearchTerm(HashMap<String, String> row, String value){
+        for (String columnValue: row.values()){
+            if (columnValue != null && columnValue.toLowerCase().contains(value.toLowerCase())){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static boolean isJobAlreadyAdded(ArrayList<HashMap<String, String>> matchingJobs, HashMap<String, String> job){
+        for (HashMap<String, String> existingJob : matchingJobs){
+            if (existingJob.get("jobId").equals(job.get("jobId"))){
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
