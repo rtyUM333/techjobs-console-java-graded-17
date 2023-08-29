@@ -99,16 +99,16 @@ public class JobData {
         ArrayList<HashMap<String, String>> matchingJobs = new ArrayList<>();
 
         for (HashMap<String, String> row : allJobs) {
-            boolean foundMatch = false;
+            boolean isMatchFound = false;
 
             for (String key : row.keySet()) {
                 String aValue = row.get(key).toLowerCase();
                 if (aValue.contains(value.toLowerCase())) {
-                    foundMatch = true;
+                    isMatchFound = true;
                     break;
                 }
             }
-            if (foundMatch) {
+            if (isMatchFound) {
                 matchingJobs.add(row);
             }
         }
