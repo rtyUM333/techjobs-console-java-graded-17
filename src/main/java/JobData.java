@@ -75,7 +75,7 @@ public class JobData {
 
             String aValue = row.get(column);
 
-            if (aValue.contains(value)) {
+            if (aValue.toLowerCase().contains(value.toLowerCase())) {
                 jobs.add(row);
             }
         }
@@ -99,39 +99,16 @@ public class JobData {
         ArrayList<HashMap<String, String>> matchingJobs = new ArrayList<>();
 
         for (HashMap<String, String> row : allJobs) {
-            boolean isMatchFound = false;
 
             for (String key : row.keySet()) {
-                String aValue = row.get(key).toLowerCase();
-                if (aValue.contains(value.toLowerCase())) {
-                    isMatchFound = true;
-                    break;
+                String aValue = row.get(key);
+                if (aValue != null && aValue.toLowerCase().contains(value.toLowerCase())) {
+                        matchingJobs.add(row);
+                        break;
+                    }
                 }
             }
-            if (isMatchFound) {
-                matchingJobs.add(row);
-            }
-        }
         return matchingJobs;
-    }
-
-
-    private static boolean containsSearchTerm(HashMap<String, String> row, String value){
-        for (String columnValue: row.values()){
-            if (columnValue != null && columnValue.toLowerCase().contains(value.toLowerCase())){
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private static boolean isJobAlreadyAdded(ArrayList<HashMap<String, String>> matchingJobs, HashMap<String, String> job){
-        for (HashMap<String, String> existingJob : matchingJobs){
-            if (existingJob.get("jobId").equals(job.get("jobId"))){
-                return true;
-            }
-        }
-        return false;
     }
 
     /**
